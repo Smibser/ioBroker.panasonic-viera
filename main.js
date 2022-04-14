@@ -5,7 +5,7 @@
 // You have to require the utils module and call adapter function
 const utils = require('@iobroker/adapter-core'); // Get common adapter utils
 const ping = require('ping');
-const {VieraKeys, Viera} = require('node-panasonic-viera');
+const { VieraKeys, Viera } = require('node-panasonic-viera');
 
 // Mapping table for state <> VieraKeys mapping
 const stateKeyMap = {
@@ -53,7 +53,7 @@ const stateKeyMap = {
   'info.INDEX': VieraKeys.index,
   'info.INFO': VieraKeys.info,
   'others.INTERNET': VieraKeys.connect,
-  'basic.left': VieraKeys.left,
+  'basic.LEFT': VieraKeys.left,
   'info.MENU': VieraKeys.menu,
   'others.MPX': VieraKeys.mpx,
   // 'basic.mute':         VieraKeys.mute,
@@ -139,7 +139,7 @@ function startAdapter(options) {
 function setConnected(_isConnected) {
   if (isConnected !== _isConnected) {
     isConnected = _isConnected;
-    adapter.setState('info.connection', {val: isConnected, ack: true});
+    adapter.setState('info.connection', { val: isConnected, ack: true });
   }
 }
 
@@ -180,12 +180,12 @@ function sendCommand(cmd, value) {
             return viera.getMute();
           })
           .then(mute => {
-            adapter.setState('basic.mute', {val: mute, ack: true});
-            adapter.setState('info.tv_on', {val: true, ack: true});
+            adapter.setState('basic.mute', { val: mute, ack: true });
+            adapter.setState('info.tv_on', { val: true, ack: true });
           })
           .catch(error => {
             adapter.log.debug('getMute: ' + error);
-            adapter.setState('info.tv_on', {val: false, ack: true});
+            adapter.setState('info.tv_on', { val: false, ack: true });
           });
         break;
 
@@ -198,7 +198,7 @@ function sendCommand(cmd, value) {
             return viera.getMute();
           })
           .then(mute => {
-            adapter.setState('basic.mute', {val: mute, ack: true});
+            adapter.setState('basic.mute', { val: mute, ack: true });
           })
           .catch(error => {
             adapter.log.error('getMute: ' + error);
@@ -211,12 +211,12 @@ function sendCommand(cmd, value) {
             return viera.getVolume();
           })
           .then(volume => {
-            adapter.setState('basic.volume', {val: volume, ack: true});
-            adapter.setState('info.tv_on', {val: true, ack: true});
+            adapter.setState('basic.volume', { val: volume, ack: true });
+            adapter.setState('info.tv_on', { val: true, ack: true });
           })
           .catch(error => {
             adapter.log.debug('getVolume: ' + error);
-            adapter.setState('info.tv_on', {val: false, ack: true});
+            adapter.setState('info.tv_on', { val: false, ack: true });
           });
         break;
 
@@ -229,8 +229,8 @@ function sendCommand(cmd, value) {
             return viera.getVolume();
           })
           .then(volume => {
-            adapter.setState('basic.volume', {val: volume, ack: true});
-            adapter.setState('info.tv_on', {val: true, ack: true});
+            adapter.setState('basic.volume', { val: volume, ack: true });
+            adapter.setState('info.tv_on', { val: true, ack: true });
           })
           .catch(error => {
             adapter.log.error('getVolume: ' + error);
@@ -246,8 +246,8 @@ function sendCommand(cmd, value) {
             return viera.getVolume();
           })
           .then(volume => {
-            adapter.setState('basic.volume', {val: volume, ack: true});
-            adapter.setState('info.tv_on', {val: true, ack: true});
+            adapter.setState('basic.volume', { val: volume, ack: true });
+            adapter.setState('info.tv_on', { val: true, ack: true });
           })
           .catch(error => {
             adapter.log.error('getVolume: ' + error);
@@ -263,8 +263,8 @@ function sendCommand(cmd, value) {
             return viera.getVolume();
           })
           .then(volume => {
-            adapter.setState('basic.volume', {val: volume, ack: true});
-            adapter.setState('info.tv_on', {val: true, ack: true});
+            adapter.setState('basic.volume', { val: volume, ack: true });
+            adapter.setState('info.tv_on', { val: true, ack: true });
           })
           .catch(error => {
             adapter.log.error('getVolume: ' + error);
