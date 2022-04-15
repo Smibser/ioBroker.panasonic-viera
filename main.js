@@ -113,19 +113,18 @@ let isConnected = null;
 // adapter will be restarted automatically every time as the configuration changed, e.g system.adapter.template.0
 let adapter;
 function startAdapter(options) {
-  console.log('adapter started');
   options = options || {};
   Object.assign(options, {
     name: 'panasonic-viera',
     stateChange(id, state) {
       if (id && state && !state.ack) {
         let cmd = id.split('.').slice(-2).join('.');
-        console.log('state triggered: ' + cmd + ': ' + state.val);
+        adapter.log.debug('state triggered: ' + cmd + ': ' + state.val);
         if (typeof (stateKeyMap[cmd]) !== 'undefined') {
           cmd = stateKeyMap[cmd];
         }
 
-        console.log('sending command: ' + cmd);
+        adapter.log.debug('sending command: ' + cmd);
         sendCommand(cmd, state.val);
       }
     },
@@ -154,7 +153,7 @@ function main() {
 
     setInterval(checkStatus, 30000);
   } else {
-    console.log('Please configure the Panasonic Viera adapter');
+    adapter.log.error('Please configure the Panasonic Viera adapter');
   }
 }
 
@@ -169,7 +168,7 @@ function checkStatus() {
     })
     .catch(error => {
       setConnected(false);
-      console.log(error);
+      adapter.log.error(error);
     });
 }
 
@@ -186,7 +185,7 @@ function sendCommand(cmd, value) {
             adapter.setState('info.tv_on', { val: true, ack: true });
           })
           .catch(error => {
-            console.log('getMute: ' + error);
+            adapter.log.debug('getMute: ' + error);
             adapter.setState('info.tv_on', { val: false, ack: true });
           });
         break;
@@ -203,7 +202,7 @@ function sendCommand(cmd, value) {
             adapter.setState('basic.mute', { val: mute, ack: true });
           })
           .catch(error => {
-            console.log('getMute: ' + error);
+            adapter.log.error('getMute: ' + error);
           });
         break;
 
@@ -217,7 +216,7 @@ function sendCommand(cmd, value) {
             adapter.setState('info.tv_on', { val: true, ack: true });
           })
           .catch(error => {
-            console.log('getVolume: ' + error);
+            adapter.log.debug('getVolume: ' + error);
             adapter.setState('info.tv_on', { val: false, ack: true });
           });
         break;
@@ -235,7 +234,7 @@ function sendCommand(cmd, value) {
             adapter.setState('info.tv_on', { val: true, ack: true });
           })
           .catch(error => {
-            console.log('getVolume: ' + error);
+            adapter.log.error('getVolume: ' + error);
           });
         break;
 
@@ -252,7 +251,7 @@ function sendCommand(cmd, value) {
             adapter.setState('info.tv_on', { val: true, ack: true });
           })
           .catch(error => {
-            console.log('getVolume: ' + error);
+            adapter.log.error('getVolume: ' + error);
           });
         break;
 
@@ -269,7 +268,7 @@ function sendCommand(cmd, value) {
             adapter.setState('info.tv_on', { val: true, ack: true });
           })
           .catch(error => {
-            console.log('getVolume: ' + error);
+            adapter.log.error('getVolume: ' + error);
           });
         break;
 
@@ -279,7 +278,7 @@ function sendCommand(cmd, value) {
             return viera.sendKey(cmd);
           })
           .catch(error => {
-            console.log('sendCommand[' + cmd + ']: ' + error);
+            adapter.log.error('sendCommand[' + cmd + ']: ' + error);
           });
         break;
     }
