@@ -114,6 +114,7 @@ let isConnected = null;
 let adapter;
 function startAdapter(options) {
   adapter.log('adapter started');
+  console.log('adapter started');
   options = options || {};
   Object.assign(options, {
     name: 'panasonic-viera',
