@@ -163,10 +163,10 @@ function checkStatus() {
   ping.promise.probe(adapter.config.ip)
     .then(result => {
       setConnected(result.alive);
-      if (result.alive) {
-        sendCommand('getMute');
-        sendCommand('getVolume');
-      }
+      // if (result.alive) {
+      //   sendCommand('getMute');
+      //   sendCommand('getVolume');
+      // }
     })
     .catch(error => {
       setConnected(false);
@@ -176,114 +176,112 @@ function checkStatus() {
 
 function sendCommand(cmd, value) {
   if (isConnected) {
-    switch (cmd) {
-      case 'getMute':
-        viera.connect(adapter.config.ip, adapter.config.app_id, adapter.config.encryption_key)
-          .then(() => {
-            return viera.getMute();
-          })
-          .then(mute => {
-            adapter.setState('basic.mute', { val: mute, ack: true });
-            adapter.setState('info.tv_on', { val: true, ack: true });
-          })
-          .catch(error => {
-            adapter.log.debug('getMute: ' + error);
-            adapter.setState('info.tv_on', { val: false, ack: true });
-          });
-        break;
+      // case 'getMute':
+      //   viera.connect(adapter.config.ip, adapter.config.app_id, adapter.config.encryption_key)
+      //     .then(() => {
+      //       return viera.getMute();
+      //     })
+      //     .then(mute => {
+      //       adapter.setState('basic.mute', { val: mute, ack: true });
+      //       adapter.setState('info.tv_on', { val: true, ack: true });
+      //     })
+      //     .catch(error => {
+      //       adapter.log.debug('getMute: ' + error);
+      //       adapter.setState('info.tv_on', { val: false, ack: true });
+      //     });
+      //   break;
 
-      case 'basic.mute':
-        viera.connect(adapter.config.ip, adapter.config.app_id, adapter.config.encryption_key)
-          .then(() => {
-            return viera.setMute(value);
-          })
-          .then(() => {
-            return viera.getMute();
-          })
-          .then(mute => {
-            adapter.setState('basic.mute', { val: mute, ack: true });
-          })
-          .catch(error => {
-            adapter.log.error('getMute: ' + error);
-          });
-        break;
+      // case 'basic.mute':
+      //   viera.connect(adapter.config.ip, adapter.config.app_id, adapter.config.encryption_key)
+      //     .then(() => {
+      //       return viera.setMute(value);
+      //     })
+      //     .then(() => {
+      //       return viera.getMute();
+      //     })
+      //     .then(mute => {
+      //       adapter.setState('basic.mute', { val: mute, ack: true });
+      //     })
+      //     .catch(error => {
+      //       adapter.log.error('getMute: ' + error);
+      //     });
+      //   break;
 
-      case 'getVolume':
-        viera.connect(adapter.config.ip, adapter.config.app_id, adapter.config.encryption_key)
-          .then(() => {
-            return viera.getVolume();
-          })
-          .then(volume => {
-            adapter.setState('basic.volume', { val: volume, ack: true });
-            adapter.setState('info.tv_on', { val: true, ack: true });
-          })
-          .catch(error => {
-            adapter.log.debug('getVolume: ' + error);
-            adapter.setState('info.tv_on', { val: false, ack: true });
-          });
-        break;
+      // case 'getVolume':
+      //   viera.connect(adapter.config.ip, adapter.config.app_id, adapter.config.encryption_key)
+      //     .then(() => {
+      //       return viera.getVolume();
+      //     })
+      //     .then(volume => {
+      //       adapter.setState('basic.volume', { val: volume, ack: true });
+      //       adapter.setState('info.tv_on', { val: true, ack: true });
+      //     })
+      //     .catch(error => {
+      //       adapter.log.debug('getVolume: ' + error);
+      //       adapter.setState('info.tv_on', { val: false, ack: true });
+      //     });
+      //   break;
 
-      case 'VOLUP':
-        viera.connect(adapter.config.ip, adapter.config.app_id, adapter.config.encryption_key)
-          .then(() => {
-            return viera.sendKey(VieraKeys.volume_up);
-          })
-          .then(() => {
-            return viera.getVolume();
-          })
-          .then(volume => {
-            adapter.setState('basic.volume', { val: volume, ack: true });
-            adapter.setState('info.tv_on', { val: true, ack: true });
-          })
-          .catch(error => {
-            adapter.log.error('getVolume: ' + error);
-          });
-        break;
+      // case 'VOLUP':
+      //   viera.connect(adapter.config.ip, adapter.config.app_id, adapter.config.encryption_key)
+      //     .then(() => {
+      //       return viera.sendKey(VieraKeys.volume_up);
+      //     })
+      //     .then(() => {
+      //       return viera.getVolume();
+      //     })
+      //     .then(volume => {
+      //       adapter.setState('basic.volume', { val: volume, ack: true });
+      //       adapter.setState('info.tv_on', { val: true, ack: true });
+      //     })
+      //     .catch(error => {
+      //       adapter.log.error('getVolume: ' + error);
+      //     });
+      //   break;
 
-      case 'VOLDOWN':
-        viera.connect(adapter.config.ip, adapter.config.app_id, adapter.config.encryption_key)
-          .then(() => {
-            return viera.sendKey(VieraKeys.volume_down);
-          })
-          .then(() => {
-            return viera.getVolume();
-          })
-          .then(volume => {
-            adapter.setState('basic.volume', { val: volume, ack: true });
-            adapter.setState('info.tv_on', { val: true, ack: true });
-          })
-          .catch(error => {
-            adapter.log.error('getVolume: ' + error);
-          });
-        break;
+      // case 'VOLDOWN':
+      //   viera.connect(adapter.config.ip, adapter.config.app_id, adapter.config.encryption_key)
+      //     .then(() => {
+      //       return viera.sendKey(VieraKeys.volume_down);
+      //     })
+      //     .then(() => {
+      //       return viera.getVolume();
+      //     })
+      //     .then(volume => {
+      //       adapter.setState('basic.volume', { val: volume, ack: true });
+      //       adapter.setState('info.tv_on', { val: true, ack: true });
+      //     })
+      //     .catch(error => {
+      //       adapter.log.error('getVolume: ' + error);
+      //     });
+      //   break;
 
-      case 'basic.volume':
-        viera.connect(adapter.config.ip, adapter.config.app_id, adapter.config.encryption_key)
-          .then(() => {
-            return viera.setVolume(value);
-          })
-          .then(() => {
-            return viera.getVolume();
-          })
-          .then(volume => {
-            adapter.setState('basic.volume', { val: volume, ack: true });
-            adapter.setState('info.tv_on', { val: true, ack: true });
-          })
-          .catch(error => {
-            adapter.log.error('getVolume: ' + error);
-          });
-        break;
-
-      default:
+      // case 'basic.volume':
+      //   viera.connect(adapter.config.ip, adapter.config.app_id, adapter.config.encryption_key)
+      //     .then(() => {
+      //       return viera.setVolume(value);
+      //     })
+      //     .then(() => {
+      //       return viera.getVolume();
+      //     })
+      //     .then(volume => {
+      //       adapter.setState('basic.volume', { val: volume, ack: true });
+      //       adapter.setState('info.tv_on', { val: true, ack: true });
+      //     })
+      //     .catch(error => {
+      //       adapter.log.error('getVolume: ' + error);
+      //     });
+      //   break;
         viera.connect(adapter.config.ip, adapter.config.app_id, adapter.config.encryption_key)
           .then(() => {
             return viera.sendKey(cmd);
           })
           .catch(error => {
+            setConnected(false);
+            checkStatus();
             adapter.log.error('sendCommand[' + cmd + ']: ' + error);
           });
-        break;
-    }
+    
   }
 }
 
