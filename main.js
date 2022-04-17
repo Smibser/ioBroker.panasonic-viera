@@ -113,8 +113,6 @@ let isConnected = null;
 // adapter will be restarted automatically every time as the configuration changed, e.g system.adapter.template.0
 let adapter;
 function startAdapter(options) {
-  adapter.log('adapter started');
-  console.log('adapter started');
   options = options || {};
   Object.assign(options, {
     name: 'panasonic-viera',
