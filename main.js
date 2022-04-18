@@ -163,6 +163,7 @@ function checkStatus() {
       adapter.log.debug('recived ' + result.alive + ' from ping');
       adapter.log.debug(result);
       setConnected(result.alive);
+      adapter.setState('info.tv_on', { val: result.alive, ack: true });
       // if (result.alive) {
       //   sendCommand('getMute');
       //   sendCommand('getVolume');
