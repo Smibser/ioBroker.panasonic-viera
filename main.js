@@ -275,10 +275,12 @@ function sendCommand(cmd, value) {
       //   break;
         viera.connect(adapter.config.ip, adapter.config.app_id, adapter.config.encryption_key)
           .then(() => {
+            adapter.setState('info.tv_on', { val: true, ack: true });
             return viera.sendKey(cmd);
           })
           .catch(error => {
             setConnected(false);
+            adapter.setState('info.tv_on', { val: false, ack: true });
             checkStatus();
             adapter.log.error('sendCommand[' + cmd + ']: ' + error);
           });
