@@ -160,6 +160,8 @@ function main() {
 function checkStatus() {
   ping.promise.probe(adapter.config.ip)
     .then(result => {
+      adapter.log.debug('recived ' + result.alive + ' from ping');
+      adapter.log.debug(result);
       setConnected(result.alive);
       // if (result.alive) {
       //   sendCommand('getMute');
