@@ -160,8 +160,6 @@ function main() {
 function checkStatus() {
   ping.promise.probe(adapter.config.ip)
     .then(result => {
-      adapter.log.debug('recived ' + result.alive + ' from ping');
-      adapter.log.debug(result);
       setConnected(result.alive);
       adapter.setState('info.tv_on', { val: result.alive, ack: true });
       // if (result.alive) {
@@ -171,6 +169,7 @@ function checkStatus() {
     })
     .catch(error => {
       setConnected(false);
+      adapter.setState('info.tv_on', { val: false, ack: true });
       adapter.log.error(error);
     });
 }
@@ -279,8 +278,6 @@ function sendCommand(cmd, value) {
             return viera.sendKey(cmd);
           })
           .catch(error => {
-            setConnected(false);
-            adapter.setState('info.tv_on', { val: false, ack: true });
             checkStatus();
             adapter.log.error('sendCommand[' + cmd + ']: ' + error);
           });
