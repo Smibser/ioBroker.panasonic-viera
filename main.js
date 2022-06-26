@@ -125,7 +125,7 @@ function startAdapter(options) {
         }
 
         adapter.log.debug('sending command: ' + cmd);
-        sendCommand(cmd, state.val);
+        sendCommand(cmd, state.val, 0);
       }
     },
     ready: main
@@ -174,7 +174,7 @@ function checkStatus() {
     });
 }
 
-function sendCommand(cmd, value) {
+function sendCommand(cmd, value, retry) {
   if (isConnected) {
       // case 'getMute':
       //   viera.connect(adapter.config.ip, adapter.config.app_id, adapter.config.encryption_key)
@@ -277,9 +277,13 @@ function sendCommand(cmd, value) {
             adapter.setState('info.tv_on', { val: true, ack: true });
             return viera.sendKey(cmd);
           })
-          .catch(error => {
+          .catch(async error => {
             checkStatus();
             adapter.log.error('sendCommand[' + cmd + ']: ' + error);
+            if(retry < 20){
+              await wait(5000);
+              sendCommand(cmd, value, retry++);
+            }
           });
     
   }
