@@ -151,7 +151,7 @@ function main() {
     adapter.subscribeStates('*');
     checkStatus();
 
-    setInterval(checkStatus, 30000);
+    setInterval(checkStatus, 10000);
   } else {
     adapter.log.error('Please configure the Panasonic Viera adapter');
   }
@@ -167,10 +167,16 @@ function checkStatus() {
       //   sendCommand('getVolume');
       // }
     })
-    .catch(error => {
-      setConnected(false);
-      adapter.setState('info.tv_on', { val: false, ack: true });
-      adapter.log.error(error);
+    .catch(async error => {
+      await wait(10000);
+      ping.promise.probe(adapter.config.ip).catch(async error => {
+        await wait(10000);
+        ping.promise.probe(adapter.config.ip).catch(error => {
+          setConnected(false);
+          adapter.setState('info.tv_on', { val: false, ack: true });
+          adapter.log.error(error);
+        });
+      });
     });
 }
 
